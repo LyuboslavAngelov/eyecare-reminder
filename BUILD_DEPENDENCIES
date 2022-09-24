@@ -1,0 +1,7 @@
+wheel
+setuptools
+PyQt5
+PyYAML
+jeepney
+psutil
+pyxdg
