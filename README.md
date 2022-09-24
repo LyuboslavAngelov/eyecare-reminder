@@ -22,7 +22,7 @@ It is likely it will not work on Wayland or PipeWire.
 _**Ubuntu 20.04**_ (Newer versions will not work as they use Wayland)
 <font size="2">_(should automatically install with package)_</font>
 ```commandline
-add-apt-repository ppa:lyubo-angelov/ppa
+add-apt-repository ppa:lyubo-angelov/eyecare-reminder
 apt update
 apt install eyecare-reminder
 ```
