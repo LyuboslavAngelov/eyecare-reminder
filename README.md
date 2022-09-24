@@ -24,7 +24,7 @@ _**Ubuntu 20.04**_ (Newer versions will not work as they use Wayland)
 ```commandline
 add-apt-repository ppa:lyubo-angelov/eyecare-reminder
 apt update
-apt install eyecare-reminder
+apt install python3-eyecare-reminder
 ```
 
 ### Dependencies
