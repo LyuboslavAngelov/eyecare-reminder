@@ -19,8 +19,8 @@ It is likely it will not work on Wayland or PipeWire.
 
 ## Installing
 
-_**Ubuntu 20.04**_ (Newer versions will not work as they use Wayland)
-<font size="2">_(should automatically install with package)_</font>
+_**Ubuntu 20.04**_  
+<font size="1">_(Newer versions will not work as they use Wayland)_</font>
 ```commandline
 add-apt-repository ppa:lyubo-angelov/eyecare-reminder
 apt-get update
