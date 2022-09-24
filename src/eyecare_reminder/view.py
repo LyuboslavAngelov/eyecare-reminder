@@ -14,9 +14,9 @@ class View(QSystemTrayIcon):
             controller (eyecare_reminder.eyecare_reminder.EyecareReminder):
                 The controller object.
         """
+        self._controller = controller
         self.checkTray()
         super().__init__()
-        self._controller = controller
 
         self.icon_default = QIcon(config.icon)
         self.icon_attention = QIcon(config.icon_attention)

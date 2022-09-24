@@ -20,6 +20,12 @@ It is likely it will not work on Wayland or PipeWire.
 ## Installing
 
 _**Ubuntu 20.04**_ (Newer versions will not work as they use Wayland)
+<font size="2">_(should automatically install with package)_</font>
+```commandline
+add-apt-repository ppa:lyubo-angelov/ppa
+apt update
+apt install eyecare-reminder
+```
 
 ### Dependencies
 <font size="2">_(should automatically install with package)_</font>
@@ -69,25 +75,33 @@ git clone https://github.com/LyuboslavAngelov/eyecare-reminder.git
 cd eyecare-reminder
 ```
 
+Install build dependencies:  
+<font size="1">_*May require root priviliges_</font>
+```commandline
+apt install dh-python python3-stdeb python3-xdg
+```
+
 ### Building the deb package:
 To build the deb package:
 ```commandline
 make dist
 ```
-To install the deb package to your system (may require root priviliges):  
-<font size="2">_It is important to note that this will attempt to install all dependencies._</font>
+To install the deb package to your system:  
+<font size="1">_*May require root priviliges_  
+_*It is important to note that this will attempt to install all runtime dependencies._</font>
 ```commandline
 make install
 ```
 
-To uninstall the deb package from your system (may require root priviliges):
+To uninstall the deb package from your system:  
+<font size="1">_*May require root priviliges_</font>
 ```commandline
 make uninstall
 ```
 ## For developers:
 ### To make a local virtual environment and test changes on the fly:
 To make a local virtual environment:  
-<font size="2">_It is important to note that this **will not install non python dependencies**_</font>
+<font size="1">_*It is important to note that this **will not install non python dependencies**_</font>
 ```commandline
 make venv
 ```
@@ -117,4 +131,4 @@ make clean-venv
 
 **GNU GENERAL PUBLIC LICENSE Version 3**  
   
-<font size="">_More details in the LICENSE file_</font>
+<font size="">_More information in the LICENSE file_</font>

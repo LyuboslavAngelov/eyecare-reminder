@@ -45,6 +45,13 @@ dist:
 	python3 setup.py --command-packages=stdeb.command bdist_deb
 	printf "\033[0;36m\n\n--------Finished building the deb package--------\n\n\n"
 
+.PHONY dist-signed:
+dist-signed:
+	printf "\033[0;36m\n\n--------Building and signing deb package--------\n\n\n"
+	python3 setup.py --command-packages=stdeb.command sdist_dsc --sign-results bdist_deb
+	printf "\033[0;36m\n\n--------Finished building and signing the deb package--------\n\n\n"
+
+
 .PHONY install:  # Install the deb package
 install: dist
 	printf "\033[0;36m\n\n--------Installing deb package--------\n\n\n"
