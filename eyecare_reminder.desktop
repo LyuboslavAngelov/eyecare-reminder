@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Eyecare Reminder
+Comment=Send notifications to look away from screen
+Exec=eyecare_reminder
+Terminal=false
+Type=Application
+Icon=""
+Categories=Utility;
+X-GNOME-Autostart-enabled=true
