@@ -1,1 +1,1 @@
-include *.md *.txt *.wav *.png LICENSE VENV VERSION
+include *.md *.txt *.wav *.png APPNAME VERSION VENV LICENSE

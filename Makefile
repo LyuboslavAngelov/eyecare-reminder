@@ -1,17 +1,19 @@
 SHELL = /bin/bash
 
-VENV_FILE="VENV"
+APPNAME_FILE="APPNAME"
+VENV_FILE="VENV_DIR"
 DEPENDENCIES_FILE="BUILD_DEPENDENCIES"
 VERSION_FILE="VERSION"
 
+APPNAME:=$(shell cat $(APPNAME_FILE))
 VENV:=$(shell cat $(VENV_FILE))
 VERSION:=$(shell cat $(VERSION_FILE))
-DEB_PACKAGE_NAME=python3-eyecare-reminder
+DEB_PACKAGE_NAME=python3-$(APPNAME)
 
 .PHONY clean-venv:  # Clean the built virtual environment
 clean-venv:
 	printf "\033[0;36m\n\n--------Cleaning the venv files--------\n\n\n"
-	rm -rf ${VENV}
+	rm -rf $(VENV)
 	rm -rf build
 	printf "\033[0;36m\n\n--------Finished cleaning the venv files--------\n\n\n"
 
@@ -20,7 +22,7 @@ clean-venv:
 	rm -rf deb_dist
 	rm -rf dist
 	rm -rf deb
-	rm -rf eyecare_reminder.egg-info
+	rm -rf $(APPNAME).egg-info
 	printf "\033[0;36m\n\n--------Finished cleaning the deb build files--------\n\n\n"
 
 .PHONY clean-all:  # Clean all the build directories
@@ -28,7 +30,7 @@ clean-all: clean-venv clean-dist
 
 .PHONY venv:  # Build a virtual environment with all required packages.
 venv:
-	if [ ! -d ${VENV} ]; then \
+	if [ ! -d $(VENV) ]; then \
   		printf "\033[0;36m\n\n--------Building venv--------\n\n\n"; \
 		python3.8 -m venv $(VENV); \
 		source $(VENV)/bin/activate; \
@@ -68,4 +70,4 @@ launch: venv  # Source the venv and launch the app.
 	printf "\033[0;36m\n\n--------Launching dev build--------\n\n\n"; \
 	source $(VENV)/bin/activate; \
 	python3 setup.py install; \
-	python3 -m eyecare_reminder.main; \
+	python3 -m $(APPNAME).main; \

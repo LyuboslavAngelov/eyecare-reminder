@@ -4,6 +4,8 @@ import subprocess
 import yaml
 from yaml.loader import SafeLoader
 
+from . import config
+
 
 def checkIfProcessRunning(process_name):
     """Check if there is any running process that contain
@@ -114,3 +116,10 @@ def play_sound(sound_file):
     if not ext == "wav":
         raise RuntimeError("Unsupported audio extension .{}".format(ext))
     subprocess.Popen(("aplay", sound_file))
+
+def createLogFile():
+    """Create an empty log file if needed"""
+    parent_dir = os.path.dirname(config.default_log_location)
+    if not os.path.exists(parent_dir):
+        os.makedirs(parent_dir)
+    open(config.default_log_location, "w").close()

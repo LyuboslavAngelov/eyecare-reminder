@@ -11,6 +11,8 @@ from xdg import BaseDirectory, DesktopEntry
 from .config import ConfigKeys
 from . import config, utils
 
+if not os.path.exists(config.default_log_location):
+    utils.createLogFile()
 logging.basicConfig(
     filename=config.default_log_location,
     filemode="a",
@@ -34,7 +36,8 @@ class EyecareReminder(QObject):
         self._timer_animation = QTimer()
         self._timer.timeout.connect(self._timeout)
         self._timer_animation.timeout.connect(self._timeoutAnimation)
-        self.setDesktopFileIconPath()
+        if config.system == "Linux":
+            self.setDesktopFileIconPath()
         _LOGGER.info("STARTING")
 
     def setup(self, view):
@@ -53,7 +56,7 @@ class EyecareReminder(QObject):
         _LOGGER.info("STARTED REMINDER TIMER")
         interval = self._config.get(ConfigKeys.reminder_interval.name)
         interval = utils.convert_seconds_to_ms(interval)
-        self._view.setReminderToolTip(self._get_next_timeout_time())
+        self._view.setReminderToolTip(self._getNextTimeoutTime())
         self._timer.start(interval)
         self._timer_animation.stop()
         self._view.setDefaultTrayIcon()
@@ -98,7 +101,7 @@ class EyecareReminder(QObject):
         if not success:
             _LOGGER.error("Could not switch icon")
 
-    def _get_next_timeout_time(self):
+    def _getNextTimeoutTime(self):
         """Return the time the next reminder will be at.
 
         Returns:
@@ -311,16 +314,17 @@ class EyecareReminder(QObject):
 
     def toggleAutostart(self):
         """Toggle starting with system."""
-        desktop_file_path = self.getDesktopFilePath()
-        desktop_file = self.readDesktopFile(desktop_file_path=desktop_file_path)
-        enabled = self.getDesktopFileAutostart(desktop_file=desktop_file)
-        if enabled:
-            print("setting to false")
-            desktop_file.set(config.autostart_key, "false")
-        else:
-            print("setting to true")
-            desktop_file.set(config.autostart_key, "true")
-        desktop_file.write(desktop_file_path)
+        if config.system == "Linux":
+            desktop_file_path = self.getDesktopFilePath()
+            desktop_file = self.readDesktopFile(desktop_file_path=desktop_file_path)
+            enabled = self.getDesktopFileAutostart(desktop_file=desktop_file)
+            if enabled:
+                print("setting to false")
+                desktop_file.set(config.autostart_key, "false")
+            else:
+                print("setting to true")
+                desktop_file.set(config.autostart_key, "true")
+            desktop_file.write(desktop_file_path)
 
     def setDesktopFileIconPath(self):
         """Sets .desktop icon absolute path as they can't be relative"""

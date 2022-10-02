@@ -1,5 +1,12 @@
 import os
-from xdg import BaseDirectory
+import platform
+
+system = platform.system()
+if system == "Linux":
+    from xdg import BaseDirectory
+
+with open("APPNAME", "r") as _f:
+    appname = _f.read()
 
 # config defaults
 default_reminder_interval = 1200  # seconds - 1200 is 20 minutes
@@ -11,14 +18,38 @@ default_blacklist_process_names = []
 default_blacklist_window_names = []
 
 # config location
-default_config_location = os.path.join(
-    BaseDirectory.xdg_config_home, "eyecare_reminder", "config.yaml"
-)
+config_filename = "config.yaml"
+if system == "Linux":
+    default_config_location = os.path.join(
+        BaseDirectory.xdg_config_home, appname, config_filename
+    )
+elif system == "Darwin":
+    default_config_location = os.path.join(
+        os.path.expandvars("$HOME"), "Library", appname, config_filename
+    )
+elif system == "Windows":
+    default_config_location = os.path.join(
+        os.environ("APPDATA"), appname, config_filename
+    )
+else:
+    print("Unsupported system {}".format(system))
 
 # log location
-default_log_location = os.path.join(
-    BaseDirectory.xdg_config_home, "eyecare_reminder", "log.log"
-)
+log_filename = "log.log"
+if system == "Linux":
+    default_log_location = os.path.join(
+        BaseDirectory.xdg_config_home, appname, log_filename
+    )
+elif system == "Darwin":
+    default_log_location = os.path.join(
+        os.path.expandvars("$HOME"), "Library", appname, log_filename
+    )
+elif system == "Windows":
+    default_log_location = os.path.join(
+        os.environ("APPDATA"), appname, log_filename
+    )
+else:
+    print("Unsupported system {}".format(system))
 
 # messages
 reminder_message = "Look in the distance for {} seconds."
@@ -43,15 +74,16 @@ icon_animation_speed = 500
 reminder_notification_duration = 10000
 reminder_cooldown_duration = 10000
 
-# desktop file
-desktop_file_name = "eyecare_reminder.desktop"
-desktop_file_icon_path = os.path.abspath(
-    os.path.join(
-        BaseDirectory.xdg_data_home, "icons", "eyecare_reminder", "icon.png",
+# ubuntu desktop file
+if system == "Linux":
+    desktop_file_name = "{}.desktop".format(appname)
+    desktop_file_icon_path = os.path.abspath(
+        os.path.join(
+            BaseDirectory.xdg_data_home, "icons", appname, "icon.png",
+        )
     )
-)
-autostart_key = "X-GNOME-Autostart-enabled"
-icon_key = "Icon"
+    autostart_key = "X-GNOME-Autostart-enabled"
+    icon_key = "Icon"
 
 
 class ConfigKey(object):

@@ -31,9 +31,10 @@ class View(QSystemTrayIcon):
 
         self.autostart_action = QAction("Autostart")
         self.autostart_action.setCheckable(True)
-        autostart = self._controller.getDesktopFileAutostart()
-        if autostart:
-            self.autostart_action.setChecked(True)
+        if config.system == "Linux":
+            autostart = self._controller.getDesktopFileAutostart()
+            if autostart:
+                self.autostart_action.setChecked(True)
 
         self.edit_config_action.triggered.connect(self._controller.editConfig)
         self.reload_config_action.triggered.connect(self._controller.reloadConfig)
